@@ -1,3 +1,24 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔒 BLOQUEIO PARA USUÁRIOS DE PC
+  const isDesktop = !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isDesktop) {
+    document.body.innerHTML = `
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; font-family: sans-serif; padding: 20px;">
+        <div>
+          <h1>⚠️ Acesso restrito</h1>
+          <p>Este site está disponível apenas para dispositivos móveis.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // 🔽 O RESTO DO SEU SCRIPT ABAIXO
+
+  const btnOutro = document.getElementById('btnOutroLocal');
+  btnOutro.addEventListener('click', escolherOutroLocal);
+});
+
 const celulas = [
   {
     nome: "Célula Centro",
@@ -115,7 +136,6 @@ function ordenarCelulasPorDistancia(latUser, lngUser) {
     return graus * Math.PI / 180;
   }
 
-  // Clona array e calcula distância
   let celulasComDistancia = celulas.map(celula => {
     return {
       ...celula,
@@ -123,15 +143,12 @@ function ordenarCelulasPorDistancia(latUser, lngUser) {
     };
   });
 
-  // Ordena crescente pela distância
   celulasComDistancia.sort((a, b) => a.distancia - b.distancia);
-
   return celulasComDistancia;
 }
 
 function mostrarCelula(celula) {
   if (!celula) {
-    // Se não tiver mais célula, volta ao começo
     alert("Não há mais células próximas. Você pode tentar procurar novamente.");
     voltarParaInicio();
     return;
@@ -146,7 +163,6 @@ function mostrarCelula(celula) {
 
 function verNoMapa() {
   if (!celulaAtual) return;
-
   const endereco = encodeURIComponent(celulaAtual.endereco);
   const url = `https://www.google.com/maps/search/?api=1&query=${endereco}`;
   window.open(url, '_blank');
@@ -154,7 +170,6 @@ function verNoMapa() {
 
 function entrarEmContato() {
   if (!celulaAtual) return;
-
   window.open(`https://wa.me/${celulaAtual.telefone}`, "_blank");
 }
 
@@ -176,8 +191,3 @@ function voltarParaInicio() {
   indiceAtual = 0;
   posicaoUsuario = null;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const btnOutro = document.getElementById('btnOutroLocal');
-  btnOutro.addEventListener('click', escolherOutroLocal);
-});
