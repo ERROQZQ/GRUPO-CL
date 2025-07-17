@@ -1,76 +1,131 @@
-body {
+html, body {
+  height: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  padding: 20px;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: #eee;
   display: flex;
   justify-content: center;
-}
-
-.container {
-  max-width: 400px;
-  width: 100%;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-}
-
-h2, h3 {
+  align-items: center;
   text-align: center;
 }
 
-button {
-  display: block;
+body {
+  padding: 1rem;
+}
+
+.container {
   width: 100%;
-  padding: 15px;
-  margin-top: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
+  max-width: 480px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Título */
+h2 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #eee;
+  line-height: 1.2;
+}
+
+/* Botões padrão */
+button {
+  background-color: #444;
+  color: #eee;
+  border: 1px solid #666;
+  padding: 1.4rem 2rem;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, border-color 0.3s;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  display: block;
 }
 
 button:hover {
-  opacity: 0.9;
+  background-color: #666;
+  border-color: #888;
 }
 
-.btn-aceitar {
-  background-color: #4CAF50;
-  color: white;
+/* Card */
+.card {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 16px;
+  padding: 2.2rem 1.8rem;
+  margin-top: 2rem;
+  max-width: 480px;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
+  font-size: 1.15rem;
+  color: #ddd;
 }
 
-.btn-recusar {
-  background-color: #f44336;
-  color: white;
+/* Botão "Escolher outro local" */
+#btnOutroLocal {
+  background-color: #555;
+  border: 1px solid #777;
+  color: #eee;
+  padding: 1.4rem 2rem;
+  font-size: 1.3rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 320px;
+  margin: 1.5rem auto 0;
+  display: block;
 }
 
-a {
-  color: #007BFF;
-  text-decoration: none;
-  display: inline-block;
-  margin: 10px 0;
-  word-break: break-word;
-  font-weight: bold;
-  font-size: 15px;
+#btnOutroLocal:hover {
+  background-color: #777;
+  border-color: #aaa;
 }
 
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
+/* Botões dentro do card (Ver no mapa, Entrar em contato) */
+.acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.acoes button {
+  width: 100%;
+  max-width: 320px;
+  font-size: 1.3rem;
+  padding: 1.4rem 2rem;
+}
+
+/* Responsividade simples */
+@media (min-width: 700px) {
+  .acoes {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
-  .container {
-    padding: 15px;
+  .acoes button {
+    width: auto;
+    min-width: 180px;
   }
 
-  button {
-    font-size: 14px;
-    padding: 12px;
+  .botoes {
+    flex-direction: row;
   }
+}
 
-  a {
-    font-size: 14px;
-  }
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
 }
