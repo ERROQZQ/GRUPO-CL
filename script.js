@@ -1,131 +1,183 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #121212;
-  color: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+const celulas = [
+  {
+    nome: "Célula Centro",
+    endereco: "Rua Halfeld, 100 - Centro, Juiz de Fora - MG",
+    lat: -21.7645,
+    lng: -43.3496,
+    telefone: "5531999990001"
+  },
+  {
+    nome: "Célula São Mateus",
+    endereco: "Av. Getúlio Vargas, 500 - São Mateus, Juiz de Fora - MG",
+    lat: -21.7802,
+    lng: -43.3558,
+    telefone: "5531999990002"
+  },
+  {
+    nome: "Célula Granbery",
+    endereco: "Rua Santo Antônio, 320 - Granbery, Juiz de Fora - MG",
+    lat: -21.7549,
+    lng: -43.3641,
+    telefone: "5531999990003"
+  },
+  {
+    nome: "Célula Benfica",
+    endereco: "Rua jardim, 700 - Benfica, Juiz de Fora - MG",
+    lat: -21.704802,
+    lng: -43.4332869,
+    telefone: "5531999990004"
+  },
+  {
+    nome: "Célula Santa Catarina",
+    endereco: "Rua Rio Branco, 210 - Santa Catarina, Juiz de Fora - MG",
+    lat: -21.7495,
+    lng: -43.3600,
+    telefone: "5531999990005"
+  },
+  {
+    nome: "Célula Aeroporto",
+    endereco: "Av. Brasil, 1200 - Aeroporto, Juiz de Fora - MG",
+    lat: -21.7622,
+    lng: -43.3425,
+    telefone: "5531999990006"
+  },
+  {
+    nome: "Célula Linhares",
+    endereco: "Rua Pimenta, 550 - Linhares, Juiz de Fora - MG",
+    lat: -21.7734,
+    lng: -43.3510,
+    telefone: "5531999990007"
+  },
+  {
+    nome: "Célula Teixeiras",
+    endereco: "Rua Teixeiras, 90 - Teixeiras, Juiz de Fora - MG",
+    lat: -21.7555,
+    lng: -43.3585,
+    telefone: "5531999990008"
+  },
+  {
+    nome: "Célula Santa Luzia",
+    endereco: "Rua Santa Luzia, 430 - Santa Luzia, Juiz de Fora - MG",
+    lat: -21.7677,
+    lng: -43.3452,
+    telefone: "5531999990009"
+  },
+  {
+    nome: "Célula Nova Era",
+    endereco: "Av. Rio Branco, 820 - Nova Era, Juiz de Fora - MG",
+    lat: -21.7599,
+    lng: -43.3612,
+    telefone: "5531999990010"
+  }
+];
 
-body {
-  padding: 1rem;
-}
+let celulaAtual = null;
+let listaOrdenada = [];
+let indiceAtual = 0;
+let posicaoUsuario = null;
 
-.container {
-  width: 100%;
-  max-width: 480px;
-  padding: 0 1rem;
-  box-sizing: border-box;
-}
-
-/* Título */
-h2 {
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  color: #eee;
-  line-height: 1.2;
-}
-
-/* Botões padrão */
-button {
-  background-color: #444;
-  color: #eee;
-  border: 1px solid #666;
-  padding: 1.4rem 2rem;
-  border-radius: 12px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.3s, border-color 0.3s;
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  display: block;
-}
-
-button:hover {
-  background-color: #666;
-  border-color: #888;
-}
-
-/* Card */
-.card {
-  background-color: #222;
-  border: 1px solid #444;
-  border-radius: 16px;
-  padding: 2.2rem 1.8rem;
-  margin-top: 2rem;
-  max-width: 480px;
-  width: 100%;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
-  font-size: 1.15rem;
-  color: #ddd;
-}
-
-/* Botão "Escolher outro local" */
-#btnOutroLocal {
-  background-color: #555;
-  border: 1px solid #777;
-  color: #eee;
-  padding: 1.4rem 2rem;
-  font-size: 1.3rem;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 320px;
-  margin: 1.5rem auto 0;
-  display: block;
-}
-
-#btnOutroLocal:hover {
-  background-color: #777;
-  border-color: #aaa;
-}
-
-/* Botões dentro do card (Ver no mapa, Entrar em contato) */
-.acoes {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-top: 1rem;
-  align-items: center;
-}
-
-.acoes button {
-  width: 100%;
-  max-width: 320px;
-  font-size: 1.3rem;
-  padding: 1.4rem 2rem;
-}
-
-/* Responsividade simples */
-@media (min-width: 700px) {
-  .acoes {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.5rem;
+function procurarCelula() {
+  if (!navigator.geolocation) {
+    alert("Geolocalização não suportada pelo seu navegador.");
+    return;
   }
 
-  .acoes button {
-    width: auto;
-    min-width: 180px;
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      posicaoUsuario = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      };
+      listaOrdenada = ordenarCelulasPorDistancia(posicaoUsuario.lat, posicaoUsuario.lng);
+      indiceAtual = 0;
+      mostrarCelula(listaOrdenada[indiceAtual]);
+    },
+    err => {
+      alert("Não foi possível obter sua localização. Por favor, permita o acesso à localização e tente novamente.");
+    }
+  );
+}
+
+function ordenarCelulasPorDistancia(latUser, lngUser) {
+  function distancia(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = grausParaRad(lat2 - lat1);
+    const dLon = grausParaRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(grausParaRad(lat1)) * Math.cos(grausParaRad(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
   }
 
-  .botoes {
-    flex-direction: row;
+  function grausParaRad(graus) {
+    return graus * Math.PI / 180;
+  }
+
+  // Clona array e calcula distância
+  let celulasComDistancia = celulas.map(celula => {
+    return {
+      ...celula,
+      distancia: distancia(latUser, lngUser, celula.lat, celula.lng)
+    };
+  });
+
+  // Ordena crescente pela distância
+  celulasComDistancia.sort((a, b) => a.distancia - b.distancia);
+
+  return celulasComDistancia;
+}
+
+function mostrarCelula(celula) {
+  if (!celula) {
+    // Se não tiver mais célula, volta ao começo
+    alert("Não há mais células próximas. Você pode tentar procurar novamente.");
+    voltarParaInicio();
+    return;
+  }
+  celulaAtual = celula;
+  document.getElementById('nomeCelula').innerText = `🔥 ${celula.nome}`;
+  document.getElementById('enderecoCelula').innerText = celula.endereco;
+
+  document.getElementById('cardCelula').style.display = 'block';
+  document.getElementById('botoes-iniciais').style.display = 'none';
+}
+
+function verNoMapa() {
+  if (!celulaAtual) return;
+
+  const endereco = encodeURIComponent(celulaAtual.endereco);
+  const url = `https://www.google.com/maps/search/?api=1&query=${endereco}`;
+  window.open(url, '_blank');
+}
+
+function entrarEmContato() {
+  if (!celulaAtual) return;
+
+  window.open(`https://wa.me/${celulaAtual.telefone}`, "_blank");
+}
+
+function escolherOutroLocal() {
+  indiceAtual++;
+  if (indiceAtual >= listaOrdenada.length) {
+    alert("Você já viu todas as células próximas.");
+    voltarParaInicio();
+  } else {
+    mostrarCelula(listaOrdenada[indiceAtual]);
   }
 }
 
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-items: center;
-  width: 100%;
-  max-width: 480px;
+function voltarParaInicio() {
+  document.getElementById('cardCelula').style.display = 'none';
+  document.getElementById('botoes-iniciais').style.display = 'flex';
+  celulaAtual = null;
+  listaOrdenada = [];
+  indiceAtual = 0;
+  posicaoUsuario = null;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnOutro = document.getElementById('btnOutroLocal');
+  btnOutro.addEventListener('click', escolherOutroLocal);
+});
