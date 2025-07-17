@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Localizador de Células</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="container">
+    <h2>📍 Encontre a célula mais próxima</h2>
 
-  <h2>📍 Encontre a célula mais próxima</h2>
-  <button onclick="localizarUsuario()">Detectar minha localização</button>
+    <div class="botoes" id="botoes-iniciais">
+      <button onclick="procurarCelula()">Procurar célula</button>
+    </div>
 
-  <div id="resultado" class="card" style="display:none;"></div>
+    <div id="cardCelula" class="card" style="display: none;">
+      <h3 id="nomeCelula">🔥 Célula Nova Aliança</h3>
+      <p><strong>Endereço:</strong> <span id="enderecoCelula">Rua das Flores, 123 - Centro, São Paulo - SP</span></p>
+
+      <div class="acoes">
+        <button onclick="verNoMapa()">Ver no mapa</button>
+        <button onclick="entrarEmContato()">Entrar em contato com o líder</button>
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <button id="btnOutroLocal" style="background-color: #ff6f61;">Escolher outro local</button>
+      </div>
+    </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
